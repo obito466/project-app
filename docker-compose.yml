@@ -1,0 +1,14 @@
+services:
+  web:
+    build: .
+    container_name: project-app
+    ports:
+      - "5000:5000"        # host:container
+    environment:
+      - APP_NAME=Project App
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:5000/health')"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
